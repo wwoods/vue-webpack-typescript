@@ -16,14 +16,15 @@ if (process.env.ENV === 'development' && module.hot) {
 
   // first arguments for `module.hot.accept` and `require` methods have to be static strings
   // see https://github.com/webpack/webpack/issues/5668
+  const moduleHotAccept = module!.hot!.accept!.bind(module!.hot);
   makeHot(homeModuleId, homeComponent,
-    module.hot.accept('./components/home', () => reload(homeModuleId, (<any>require('./components/home')).HomeComponent)));
+    moduleHotAccept('./components/home', () => reload(homeModuleId, (<any>require('./components/home')).HomeComponent)));
 
   makeHot(aboutModuleId, aboutComponent,
-    module.hot.accept('./components/about', () => reload(aboutModuleId, (<any>require('./components/about')).AboutComponent)));
+    moduleHotAccept('./components/about', () => reload(aboutModuleId, (<any>require('./components/about')).AboutComponent)));
 
   makeHot(listModuleId, listComponent,
-    module.hot.accept('./components/list', () => reload(listModuleId, (<any>require('./components/list')).ListComponent)));
+    moduleHotAccept('./components/list', () => reload(listModuleId, (<any>require('./components/list')).ListComponent)));
 }
 
 Vue.use(VueRouter);

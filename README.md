@@ -7,11 +7,13 @@ code coverage, sass and bundling/minification.
 
 ### Usage
 
-This is a project template for [vue-cli](https://github.com/vuejs/vue-cli).
+This is a project template for [vue-cli](https://github.com/vuejs/vue-cli), forked from [ducksouopdev](https://github.com/ducksoupdev/vue-webpack-typescript).  It has been modified to support Vue.js [Single File Components](https://vuejs.org/v2/guide/single-file-components.html), [Pug templating](https://pugjs.org) by default, and a few other minor changes.
+
+Note on Pug!  Even though templates are compiled with Pug, the interpolation of attributes should use Vue.js template syntax instead (i.e., `p {{myProperty}}`), as the Vue.js template processor executes on the HTML emitted from Pug.  A little weird,  but works out well.
 
 ``` bash
 $ npm install -g vue-cli
-$ vue init ducksoupdev/vue-webpack-typescript my-project
+$ vue init wwoods/vue-webpack-typescript my-project
 $ cd my-project
 $ npm install
 $ npm run dev

@@ -1,5 +1,14 @@
+<template>
+.container.content
+  .row
+    .content.col-md-4
+      h1 List
+      ul
+        li(v-for="item of items") \{{item.name}}
+</template>
+<script>
 import { Component, Vue } from 'vue-property-decorator';
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 interface UserResponse {
     id: string;
@@ -7,9 +16,8 @@ interface UserResponse {
 }
 
 @Component({
-    template: require('./list.html')
 })
-export class ListComponent extends Vue {
+export default class ListComponent extends Vue {
 
     items: UserResponse[] = [];
     private url = 'https://jsonplaceholder.typicode.com/users';
@@ -36,3 +44,4 @@ export class ListComponent extends Vue {
         }
     }
 }
+</script>

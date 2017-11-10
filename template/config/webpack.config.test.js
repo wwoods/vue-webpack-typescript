@@ -4,41 +4,16 @@ var webpack = require('webpack'),
   SourceMapDevToolPlugin = require('webpack/lib/SourceMapDevToolPlugin'),
   env = require('../environment/dev.env');
 
-webpackConfig.module.rules = [{
-    test: /\.ts$/,
-    exclude: /node_modules/,
-    loader: 'awesome-typescript-loader',
-    query: {
-      compilerOptions: {
-        inlineSourceMap: true,
-        sourceMap: false
-      }
-    }
-  },
-  {
-    test: /\.html$/,
-    loader: 'raw-loader',
-    exclude: ['./src/index.html']
-  },
-  {
-    test: /\.scss$/,
-    use: [{
-        loader: 'style-loader'
-      },
-      {
-        loader: 'css-loader'
-      },
-      {
-        loader: 'sass-loader'
-      }
-    ]
-  },
-  {
-    test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
-    loader: 'url-loader?limit=8192'
+const rules = webpackConfig.module.rules;
+for (let i = 0, m = rules.length; i < m; i++) {
+  const rule = rules[i];
+  if (rule.loader === 'ts-loader') {
+    rule.options.compilerOptions = {
+      inlineSourceMap: true,
+      sourceMap: false
+    };
   }
-];
-
+}
 webpackConfig.plugins = [...webpackConfig.plugins,
   new SourceMapDevToolPlugin({
     filename: null, // if no value is provided the sourcemap is inlined

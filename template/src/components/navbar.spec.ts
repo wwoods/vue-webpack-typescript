@@ -3,13 +3,12 @@ import VueRouter from 'vue-router';
 import Component from 'vue-class-component';
 import { spy, assert } from 'sinon';
 import { expect } from 'chai';
-import { ComponentTest, MockLogger } from '../../util/component-test';
-import { NavbarComponent } from './navbar';
+import { ComponentTest, MockLogger } from '../util/component-test';
+import NavbarComponent from './navbar.vue';
 
 let loggerSpy = spy();
 
 @Component({
-  template: require('./navbar.html')
 })
 class MockNavbarComponent extends NavbarComponent {
   constructor() {

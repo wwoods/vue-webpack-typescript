@@ -2,29 +2,27 @@ import Vue from 'vue';
 import VueRouter, { Location, Route, RouteConfig } from 'vue-router';
 import { makeHot, reload } from './util/hot-reload';
 
-const homeComponent = () => import('./components/home').then(({ HomeComponent }) => HomeComponent);
-const aboutComponent = () => import('./components/about').then(({ AboutComponent }) => AboutComponent);
-const listComponent = () => import('./components/list').then(({ ListComponent }) => ListComponent);
-// const homeComponent = () => import(/* webpackChunkName: 'home' */'./components/home').then(({ HomeComponent }) => HomeComponent);
-// const aboutComponent = () => import(/* webpackChunkName: 'about' */'./components/about').then(({ AboutComponent }) => AboutComponent);
-// const listComponent = () => import(/* webpackChunkName: 'list' */'./components/list').then(({ ListComponent }) => ListComponent);
+// MUST individually force imports to trigger webpack!
+import HomeComponent from './components/home.vue';
+import AboutComponent from './components/about.vue';
+import ListComponent from './components/list.vue';
 
+const components = {
+  './components/home.vue': HomeComponent,
+  './components/about.vue': AboutComponent,
+  './components/list.vue': ListComponent,
+};
+
+// Add hot-loading of each component
 if (process.env.ENV === 'development' && module.hot) {
-  const homeModuleId = './components/home';
-  const aboutModuleId = './components/about';
-  const listModuleId = './components/list';
-
   // first arguments for `module.hot.accept` and `require` methods have to be static strings
   // see https://github.com/webpack/webpack/issues/5668
   const moduleHotAccept = module!.hot!.accept!.bind(module!.hot);
-  makeHot(homeModuleId, homeComponent,
-    moduleHotAccept('./components/home', () => reload(homeModuleId, (<any>require('./components/home')).HomeComponent)));
 
-  makeHot(aboutModuleId, aboutComponent,
-    moduleHotAccept('./components/about', () => reload(aboutModuleId, (<any>require('./components/about')).AboutComponent)));
-
-  makeHot(listModuleId, listComponent,
-    moduleHotAccept('./components/list', () => reload(listModuleId, (<any>require('./components/list')).ListComponent)));
+  for (const id in components) {
+    const comp = components[id];
+    makeHot(id, comp, moduleHotAccept(id, () => reload(id, require(id))));
+  }
 }
 
 Vue.use(VueRouter);
@@ -32,15 +30,15 @@ Vue.use(VueRouter);
 export const createRoutes: () => RouteConfig[] = () => [
   {
     path: '/',
-    component: homeComponent,
+    component: HomeComponent,
   },
   {
     path: '/about',
-    component: aboutComponent,
+    component: AboutComponent,
   },
   {
     path: '/list',
-    component: listComponent,
+    component: ListComponent,
   }
 ];
 

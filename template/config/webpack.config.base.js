@@ -14,13 +14,24 @@ let config = {
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.js', '.html'],
+    extensions: ['.ts', '.js', '.vue', '.html'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
     }
   },
   module: {
-    rules: [{
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            html: 'vue-loader/lib/template-compiler/preprocessor?engine=pug',
+            js: 'ts-loader'
+          },
+        }
+      },
+      {
         test: /\.ts$/,
         exclude: /node_modules/,
         enforce: 'pre',
@@ -29,7 +40,10 @@ let config = {
       {
         test: /\.ts$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader'
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/]
+        }
       },
       {
         test: /\.html$/,

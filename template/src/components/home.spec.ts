@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { HomeComponent } from './home';
-import { ComponentTest } from '../../util/component-test';
+import {default as HomeComponent} from './home.vue';
+import { ComponentTest } from '../util/component-test';
 
 describe('Home component', () => {
   let directiveTest: ComponentTest;

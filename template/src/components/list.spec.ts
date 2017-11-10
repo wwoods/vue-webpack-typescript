@@ -1,10 +1,9 @@
 import Component from 'vue-class-component';
 import { expect } from 'chai';
-import { ComponentTest } from '../../util/component-test';
-import { ListComponent } from './list';
+import { ComponentTest } from '../util/component-test';
+import ListComponent from './list.vue';
 
 @Component({
-  template: require('./list.html')
 })
 class MockListComponent extends ListComponent {
   constructor() {

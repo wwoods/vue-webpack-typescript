@@ -5,5 +5,5 @@ rm -rf vue-test
 vue init ./vue-webpack-typescript vue-test
 cd vue-test
 npm install
-npm run dev
+npm run test
 
